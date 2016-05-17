@@ -68,3 +68,5 @@ In order to build a Golang executable that can run in a minimal Docker container
 static-build:
 	CGO_ENABLED=0 go build -a -ldflags '-s' -installsuffix cgo -v -o streammarker-collector
 ```
+
+I configured Wercker to run the `deploy` step automatically, pushing this minimal container to Dockerhub for all successful builds. The [resulting Docker image](https://hub.docker.com/r/skidder/streammarker-collector/tags/) is extremely small, weighing in at just **2 MB**!  Minimal Docker images lead to faster installation & upgrades, have smaller disk & memory footprints, and are less exposed to security vulnerabilities. There's a lot to like about minimal Docker images!
