@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Creating Minimal Docker Images for Go App with Wercker
+title: Creating Minimal Docker Images for Go Apps with Wercker
 ---
 
 For years I've been using CircleCI to do the typical CI things: building a project, running tests, packaging & uploading artifacts, and even deploying. Lately I've noticed a lot of reliability and performance issues with CircleCI and figured it was time to explore the CI landscape.  I used [Wercker](https://www.wercker.com) about a year ago to build some Bitbucket-hosted projects that were written in Java. Wercker performed wonderfully, was (and still is) free, and supports both Github and Bitbucket.
