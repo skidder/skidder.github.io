@@ -20,7 +20,7 @@ I've wanted to use CEP to handle state transitions for alerts triggered in our s
    1. Select for *timeout* on CEP pattern
      1. Send alert message to external system to mark alert as auto-resolved
 
-The events that feed into the first alerting CEP pattern is the windowed & transformed upstream; the events include the error-rate observed over a counting window in various dimensions. I noticed that the transformed events were not triggering the CEP pattern conditions as I'd expected. No errors were reported either.
+The events that feed into the first alerting CEP pattern are the result of window & transformation operations performed upstream; the events include the error-rate observed over a counting-window in various dimensions. I noticed that the transformed events were not triggering the CEP pattern conditions as I'd expected. No errors were reported either.
 
 The CEP pattern for triggering alerts looks like:
 
