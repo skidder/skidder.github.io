@@ -9,38 +9,38 @@ I've been using [Apache Flink](https://flink.apache.org/) to perform streaming a
 
 I've wanted to use CEP to handle state transitions for alerts triggered in our system. The sequence might look like:
 
- 1. Define alerting pattern with one condition that looks for stream elements that meet alerting criteria (i.e. error-rate above threshold)
- 1. Create CEP pattern with event stream
-   1. Select for matches on CEP pattern
-     1. Send alert message to external system responsible for managing alerts, sending customer notifications, etc
- 1. Define alert resolution pattern with one condition that looks for stream elements in a non-alerting state (i.e. error-rate below threshold) within some time (e.g. 24 hours)
- 1. Create CEP pattern with the *output stream from CEP alerting pattern* and the alert resolution pattern
-   1. Select for matches on CEP pattern
-     1. Send alert message to external system to clear the alert
-   1. Select for *timeout* on CEP pattern
-     1. Send alert message to external system to mark alert as auto-resolved
+1. Define alerting pattern with one condition that looks for stream elements that meet alerting criteria (i.e. error-rate above threshold)
+1. Create CEP pattern with event stream
+  1. Select for matches on CEP pattern
+    1. Send alert message to external system responsible for managing alerts, sending customer notifications, etc
+1. Define alert resolution pattern with one condition that looks for stream elements in a non-alerting state (i.e. error-rate below threshold) within some time (e.g. 24 hours)
+1. Create CEP pattern with the *output stream from CEP alerting pattern* and the alert resolution pattern
+  1. Select for matches on CEP pattern
+    1. Send alert message to external system to clear the alert
+  1. Select for *timeout* on CEP pattern
+    1. Send alert message to external system to mark alert as auto-resolved
 
 The events that feed into the first alerting CEP pattern are the result of window & transformation operations performed upstream; the events include the error-rate observed over a counting-window in various dimensions. I noticed that the transformed events were not triggering the CEP pattern conditions as I'd expected. No errors were reported either.
 
 The CEP pattern for triggering alerts looks like:
 
 ```java
-		final Pattern<ErrorRateResult, ?> alertPattern = Pattern.<ErrorRateResult> begin("alert")
-				.where(evt -> evt.getErrorRate() >= ALERT_THRESHOLD);
+final Pattern<ErrorRateResult, ?> alertPattern = Pattern.<ErrorRateResult> begin("alert")
+		.where(evt -> evt.getErrorRate() >= ALERT_THRESHOLD);
 
-		final PatternStream<ErrorRateResult> pattern = CEP.pattern(errorRateResultStream, alertPattern);
-		final DataStream<ErrorRateResult> alertStream = pattern
-				.select(new PatternSelectFunction<ErrorRateResult, ErrorRateResult>() {
-					private static final long serialVersionUID = 1L;
+final PatternStream<ErrorRateResult> pattern = CEP.pattern(errorRateResultStream, alertPattern);
+final DataStream<ErrorRateResult> alertStream = pattern
+		.select(new PatternSelectFunction<ErrorRateResult, ErrorRateResult>() {
+			private static final long serialVersionUID = 1L;
 
-					@Override
-					public ErrorRateResult select(Map<String, ErrorRateResult> events) throws Exception {
-						// send alert
-						final ErrorRateResult event = events.get("alert");
-						return event;
-					}
-				});
-		alertStream.print();
+			@Override
+			public ErrorRateResult select(Map<String, ErrorRateResult> events) throws Exception {
+				// send alert
+				final ErrorRateResult event = events.get("alert");
+				return event;
+			}
+		});
+alertStream.print();
 ```
 
 I was certain there were events in the `errorRateResultStream` data-stream that had a high error-rate, but nothing was being printed. I was running Flink locally in Eclipse, which made it trivial to attach a Java debugger and step through the CEP event processing.
@@ -54,16 +54,16 @@ I corrected this by adding a call to `assignTimestampsAndWatermarks` on the data
 ```java
 errorRateResultStream = errorRateResultStream.assignTimestampsAndWatermarks(new AssignerWithPunctuatedWatermarks<ErrorRateResult>() {
 
-					@Override
-					public long extractTimestamp(ErrorRateResult element, long previousElementTimestamp) {
-						return element.getEndTimestamp();
-					}
+	@Override
+	public long extractTimestamp(ErrorRateResult element, long previousElementTimestamp) {
+		return element.getEndTimestamp();
+	}
 
-					@Override
-					public Watermark checkAndGetNextWatermark(ErrorRateResult lastElement, long extractedTimestamp) {
-						return new Watermark(lastElement.getEndTimestamp());
-					}
-				})
+	@Override
+	public Watermark checkAndGetNextWatermark(ErrorRateResult lastElement, long extractedTimestamp) {
+		return new Watermark(lastElement.getEndTimestamp());
+	}
+	})
 ```
 
 Problem solved!
