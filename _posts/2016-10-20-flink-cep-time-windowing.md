@@ -45,7 +45,7 @@ The CEP pattern for triggering alerts looks like:
 
 I was certain there were events in the `errorRateResultStream` data-stream that had a high error-rate, but nothing was being printed. I was running Flink locally in Eclipse, which made it trivial to attach a Java debugger and step through the CEP event processing.
 
-The events were being received by the CEP pattern, which was reassuring. The problem was that the `AbstractCEPPatternOperator` and `AbstractKeyedCEPPatternOperator` have `processWatermark` methods that compare the timestamp on the event with the stream watermark, which would work fine if only my stream had event timestamps still!
+The events were being received by the CEP pattern, which was reassuring. The problem was that the `AbstractCEPPatternOperator` and `AbstractKeyedCEPPatternOperator` have `processWatermark` methods that compare the timestamp on the event with the stream watermark, which would work fine if only my stream had event timestamps still! Since the timestamp on the event was greater (significantly so) than the watermark, it was enqueued for later processing, which would never have happened. The machine would run out of memory before the events were processed.
 
 The transformations performed before the CEP pattern resulted in the event stream timestamps being stripped. Since the execution environment relied on event-time processing, the CEP pattern insisted upon using event-time timestamps.
 
