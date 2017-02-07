@@ -23,25 +23,7 @@ I've wanted to use CEP to handle state transitions for alerts triggered in our s
 The events that feed into the first alerting CEP pattern are the result of window & transformation operations performed upstream; the events include the error-rate observed over a counting-window in various dimensions. I noticed that the transformed events were not triggering the CEP pattern conditions as I'd expected. No errors were reported either.
 
 The CEP pattern for triggering alerts looks like:
-
-```java
-final Pattern<ErrorRateResult, ?> alertPattern = Pattern.<ErrorRateResult> begin("alert")
-		.where(evt -> evt.getErrorRate() >= ALERT_THRESHOLD);
-
-final PatternStream<ErrorRateResult> pattern = CEP.pattern(errorRateResultStream, alertPattern);
-final DataStream<ErrorRateResult> alertStream = pattern
-		.select(new PatternSelectFunction<ErrorRateResult, ErrorRateResult>() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public ErrorRateResult select(Map<String, ErrorRateResult> events) throws Exception {
-				// send alert
-				final ErrorRateResult event = events.get("alert");
-				return event;
-			}
-		});
-alertStream.print();
-```
+{% gist skidder/55994af5ea5db317480eacc79353e9d4 %}
 
 I was certain there were events in the `errorRateResultStream` data-stream that had a high error-rate, but nothing was being printed. I was running Flink locally in Eclipse, which made it trivial to attach a Java debugger and step through the CEP event processing.
 
@@ -51,20 +33,7 @@ The transformations performed before the CEP pattern resulted in the event strea
 
 I corrected this by adding a call to `assignTimestampsAndWatermarks` on the data stream supplied to the CEP pattern:
 
-```java
-errorRateResultStream = errorRateResultStream.assignTimestampsAndWatermarks(new AssignerWithPunctuatedWatermarks<ErrorRateResult>() {
-
-	@Override
-	public long extractTimestamp(ErrorRateResult element, long previousElementTimestamp) {
-		return element.getEndTimestamp();
-	}
-
-	@Override
-	public Watermark checkAndGetNextWatermark(ErrorRateResult lastElement, long extractedTimestamp) {
-		return new Watermark(lastElement.getEndTimestamp());
-	}
-	})
-```
+{% gist skidder/71c3b3216449ed7bb6267b0a8d663e65 %}
 
 Problem solved!
 

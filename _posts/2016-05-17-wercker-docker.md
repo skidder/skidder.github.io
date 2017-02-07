@@ -19,54 +19,10 @@ I searched the [Wercker Steps Registry](https://app.wercker.com/#explore/steps) 
 Wercker does not place the project source on the `GOPATH` by default.  This complicates building in that you must manipulate the `GOPATH` environment variable or copy the project source to the appropriate location on the `GOPATH`. I went with the copy route.
 
 ## My Resulting wercker.yml##
-Here's are the contents of the `wercker.yml` file for my [StreamMarker Collector](https://github.com/skidder/streammarker-collector) component.
-
-```yaml
-box: golang
-build:
-  # The steps that will be executed on build
-  steps:
-    - skidder/glide-install@1.0.2
-  
-    - script:
-        name: Copy source to GOPATH
-        code: |
-          rm -rf vendor
-          mkdir -p ${GOPATH}/src/github.com/skidder/streammarker-collector
-          cp -R . ${GOPATH}/src/github.com/skidder/streammarker-collector
-
-    - script:
-        name: build
-        code: |
-          make static-build
-
-    - script:
-        name: test
-        code: |
-          make test
-
-    # Copy binary to a location that gets passed along to the deploy pipeline
-    - script:
-        name: copy binary
-        code: cp streammarker-collector "$WERCKER_OUTPUT_DIR"
-deploy:
-  steps:
-    - internal/docker-scratch-push:
-        username: $DOCKERHUB_USERNAME
-        password: $DOCKERHUB_PASSWORD
-        tag: latest
-        ports: "3000, 3100"
-        cmd: ./streammarker-collector
-        repository: skidder/streammarker-collector
-        registry: https://registry.hub.docker.com
-
-```
+Here are the contents of the `wercker.yml` file for my [StreamMarker Collector](https://github.com/skidder/streammarker-collector) component.
+{% gist skidder/ce89455bde2c63b442ddfe966259ef14 %}
 
 In order to build a Golang executable that can run in a minimal Docker container, your compilation step must produce a statically-linked binary. This is handled in the `make static-build` step in the `wercker.yml` file provided above.  The `static-build` target in the `Makefile` looks like:
-
-```Makefile
-static-build:
-	CGO_ENABLED=0 go build -a -ldflags '-s' -installsuffix cgo -v -o streammarker-collector
-```
+{% gist skidder/9eb963845231330cd8aac93c3df8dd7d %}
 
 I configured Wercker to run the `deploy` step automatically, pushing this minimal container to Dockerhub for all successful builds. The [resulting Docker image](https://hub.docker.com/r/skidder/streammarker-collector/tags/) is extremely small, weighing in at just **2 MB**!  Minimal Docker images lead to faster installation & upgrades, have smaller disk & memory footprints, and are less exposed to security vulnerabilities. There's a lot to like about minimal Docker images!
