@@ -30,6 +30,7 @@ This might seem daunting, but I assure you it's not that bad.
 
 # Building the Kinesis Connector
 Prerequisites for building Flink are:
+
  * Java JDK 6 or higher (Java 8 recommended)
  * Maven 3.x
 
