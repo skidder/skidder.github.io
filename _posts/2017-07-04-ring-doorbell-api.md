@@ -3,35 +3,35 @@ layout: post
 title: The Ring Smart Doorbell API
 ---
 
-# Background
+## Background
 The [Ring smart doorbell](https://ring.com/videodoorbells) does far more than your ordinary wired doorbell; it's able to deliver audio & video recordings in real-time over a WiFi link connected to the Internet. When your doorbell is pressed or motion is detected, the doorbell automatically begins streaming video to the Ring servers. Ring will send a push notification to your phone and archive the video, where it can be downloaded or viewed through the Ring website or app.
 
 I purchased the [original Ring doorbell](https://ring.com/video-doorbell) in December 2015. It has worked pretty well, both as a way to get notifications of guests or deliveries at the house and as a effective deterrant to people snooping around the house.
 
 With the increasing number of Internet-of-Thing (IoT) devices ending up on our home and business networks, it's important to understand how they behave and ensure that they follow industry best-practices. The security of other devices on our networks and our privacy are at stake.
 
-# Hardware Setup
+## Hardware Setup
 
 My Ring doorbell is connected to an Apple Airport Express that's configured as a 802.11G WiFi bridge, delegating DHCP leases and router functions to my Ubiquiti router. The Ring doorbell is the only device on this particular WiFi access-point.
 
 To analyze the Ring doorbell traffic, I placed a [Netgear DS104 Ethernet hub](https://www.netgear.com/support/product/DS104.aspx) in-line between the Airport Express and the Ethernet switch that connects to the rest of my home network. Next, I connected my laptop to a port on the hub; my laptop is now able to view all traffic to-and-from the Airport Express (namely, the Ring doorbell). Ethernet hubs are infrequently used these days. Hubs broadcast all packets to all ports; this is extremely inefficient, but can be very useful for troubleshooting network problems and reverse-engineering.
 
-# Capturing Traffic
+## Capturing Traffic
 
 I used Wireshark to capture TCP & UDP traffic to/from the IP address used by the Ring doorbell.
 
-# What's it Saying?
+## What's it Saying?
 
 Here I'll document some of the messages I've seen the Ring doorbell exchange with the Ring servers.
 
-## Polling for requests to watch live video
+### Polling for requests to watch live video
 The Ring doorbell polls the Ring API every 17 seconds to check whether to stream live video. If no request has been made then an `HTTP 404` response code is returned.
 
 There are a couple things worth noting here:
  * The request is sent over plain HTTP (no encryption) to http://vod.ring.com/doorbots_api/vod/ready
  * Authentication is performed using digest auth over a non-encrypted link, very bad.
 
-### Request where server doesn't need streaming video
+#### Request where server doesn't need streaming video
 ```
 GET /doorbots_api/vod/ready HTTP/1.1
 Host: vod.ring.com
@@ -48,7 +48,7 @@ Connection: keep-alive
 
 ```
 
-### Request where server responds with a request to stream video
+#### Request where server responds with a request to stream video
 ```
 GET /doorbots_api/vod/ready HTTP/1.1
 Host: vod.ring.com
@@ -65,10 +65,10 @@ Connection: keep-alive
 
 ```
 
-## Streaming Live Video Upon Request from App
+### Streaming Live Video Upon Request from App
 If the polling response indicates that live video should be sent, then the Ring doorbell will send a request to the Ring servers. The request indicates that the [Session Initiation Protocol (SIP)](http://www.cs.columbia.edu/sip/) be used. SIP is often used in real-time conference connection between client and server. That analogy works well in the scenario, where the doorbell and Ring servers are participants in a video conference.
 
-### Initiating Session
+#### Initiating Session
 When the `/doorbots_api/vod/ready` request responds with a `200 OK`, the doorbell will `POST` to the `/doorbots_api/vod` endpoint to get details needed to establish a video streaming session. The response is a Base64-encoded binary blob that I didn't recognize.
 
 ```
@@ -97,7 +97,7 @@ Connection: keep-alive
 <Base64-encoded binary data>
 ```
 
-### SIP
+#### SIP
 The following SIP messages were sent over a UDP connection held open for 14 seconds while I was streaming video to the Ring smartphone app.
 
 I enjoyed the Easter egg that Ring created with the User-Agent string `Hi Zero Cool. Job?'); DROP TABLE servers;--`. A shout out to the hacker handle [Zero Cool from the movie Hackers](https://en.wikipedia.org/wiki/Hackers_(film)#Plot), and an attempt at SQL injection to drop a database table named `servers`.
@@ -254,7 +254,7 @@ Content-Length: 0
 
 ```
 
-## Responding to Doorbell Presses
+### Responding to Doorbell Presses
 This is almost identical to the request to stream live video on demand, except it's sent to the `dings` path:
 
 ```
@@ -285,7 +285,7 @@ Connection: keep-alive
 
 The SIP session is then initiated and streaming happens over RTSP in the same manner as with live video on demand.
 
-## Responding to Motion
+### Responding to Motion
 Again, this is almost identical to the doorbell-pressed and vod requests, except it goes to the `motions` path:
 
 ```
@@ -314,12 +314,12 @@ Connection: keep-alive
 <Base64-encoded binary data>
 ```
 
-## Comparison to Earlier Protocol Versions
+### Comparison to Earlier Protocol Versions
 I did a packet capture of the Ring doorbell events in November 2016 and compared some of the messages to what I observed recently (July 2017). Clearly changes have been made.
 
 The request from the doorbell to the Ring API upon detecting motion used to include a JSON-encoded response that was in the clear:
 
-### Motion
+#### Motion
 
 ```shell
 curl -X POST \
@@ -330,7 +330,7 @@ curl -X POST \
   -H 'x-ringdevicetype: doorbell'
 ```
 
-#### Response
+##### Response
 ```
 {
     "motion": {
@@ -375,7 +375,7 @@ curl -X POST \
 }
 ```
 
-### Doorbell Pressed
+#### Doorbell Pressed
 ```shell
 curl -X POST \
   http://fw.ring.com/doorbots_api/dings \
@@ -385,7 +385,7 @@ curl -X POST \
   -H 'x-ringdevicetype: doorbell'
 ```
 
-#### Response
+##### Response
 ```
 {
     "ding": {
@@ -427,7 +427,7 @@ curl -X POST \
 
 The doorbell is currently including the `?api_version=3` query parameter which likely changes how the response is formatted so that it's Base64-encoded and possibly encrypted.
 
-## Suggestions
+### Suggestions
 I'd like for all communications with the Ring servers to use HTTPS. It's far too easy for someone to sniff requests to the Ring servers, grab the digest-auth username (MAC address) and password, and script requests that appear to be coming from the device.
 
 It also looks like the Ring doorbell rotates the password used in digest authentication, as it was different on the two days I most recently captured traffic. Perhaps they've got a one-time pad that they rotate each day. This would significantly limit the amount of time an attacker would be able to use the sniffed password. However, if they captured the password once, then it's fair to assume they'll be able to do it again.
