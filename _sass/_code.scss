@@ -1,7 +1,4 @@
-// Code
-//
-// Inline and block-level code snippets. Includes tweaks to syntax highlighted
-// snippets from Pygments/Rouge and Gist embeds.
+// Inline and block-level code snippets
 
 code,
 pre {
@@ -9,16 +6,23 @@ pre {
 }
 
 code {
-  padding: .25em .5em;
+  padding: .2em .4em;
   font-size: 85%;
   color: $code-color;
-  background-color: #f9f9f9;
+  background-color: rgba($code-bg, 0.05);
   border-radius: 3px;
 }
 
 pre {
   margin-top: 0;
   margin-bottom: 1rem;
+  overflow-x: auto;
+  padding: 1rem;
+  font-size: .8rem;
+  line-height: 1.4;
+  background-color: $code-bg;
+  border-radius: 6px;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
 }
 
 pre code {
@@ -30,49 +34,213 @@ pre code {
 
 // Pygments via Jekyll
 .highlight {
-  padding: 1rem;
   margin-bottom: 1rem;
-  font-size: .8rem;
-  line-height: 1.4;
-  background-color: #f9f9f9;
-  border-radius: .25rem;
+  border-radius: 6px;
+  background-color: $code-bg;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
   pre {
     margin-bottom: 0;
+    padding: 1rem;
+  }
+
+  .lineno {
+    display: inline-block;
+    padding-right: .75rem;
+    padding-left: .25rem;
+    color: $gray-5;
+    // Make sure numbers aren't selectable
+    user-select: none;
+  }
+}
+
+// Gist via GitHub Pages
+.gist .gist-file {
+  font-family: $code-font-family !important;
+}
+.gist .markdown-body {
+  padding: 15px;
+}
+.gist pre {
+  padding: 0;
+  background-color: transparent;
+}
+.gist .gist-file .gist-data {
+  font-size: .8rem !important;
+  line-height: 1.4;
+}
+.gist code {
+  padding: 0;
+  color: inherit;
+  background-color: transparent;
+  border-radius: 0;
+}
+
+// Syntax highlighting
+.highlight {
+  .hll { background-color: #ffc; }
+  .c { color: #999; } /* Comment */
+  .err { color: #a00; background-color: #faa } /* Error */
+  .k { color: #069; } /* Keyword */
+  .o { color: #555 } /* Operator */
+  .cm { color: #09f; font-style: italic } /* Comment.Multiline */
+  .cp { color: #099 } /* Comment.Preproc */
+  .c1 { color: #999; } /* Comment.Single */
+  .cs { color: #999; } /* Comment.Special */
+  .gd { background-color: #fcc; border: 1px solid #c00 } /* Generic.Deleted */
+  .ge { font-style: italic } /* Generic.Emph */
+  .gr { color: #f00 } /* Generic.Error */
+  .gh { color: #030; }
+}
+
+// JSON-specific styling
+.language-json {
+  .highlight {
+    background-color: #f8f8f8;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    
+    pre {
+      padding: 1.5rem;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    .p { color: #555; } /* Punctuation */
+    .s2 { color: #0b7; } /* String */
+    .mi, .mf { color: #07a; } /* Number */
+    .kc { color: #c0c; } /* Boolean */
+    .nl { color: #d63; } /* Property name */
+  }
+
+  // Collapsible JSON
+  details {
+    margin-bottom: 1rem;
+
+    summary {
+      cursor: pointer;
+      font-weight: bold;
+      padding: 0.5rem;
+      background-color: #eee;
+      border-radius: 4px;
+    }
+
+    &[open] summary {
+      margin-bottom: 0.5rem;
+    }
+  }
+}
+
+// Add visual guides for nested structures
+.language-json .highlight pre {
+  counter-reset: line;
+  
+  .line::before {
+    counter-increment: line;
+    content: counter(line);
+    display: inline-block;
+    padding: 0 0.5em;
+    margin-right: 0.5em;
+    color: #888;
+    border-right: 1px solid #ddd;
+  }
+}
+
+// Indent guide
+.language-json .highlight pre {
+  background-image: linear-gradient(to right, #f8f8f8 1px, transparent 1px);
+  background-size: 1rem 1rem;
+  background-position: 2rem 0;
+}
+
+// Shared styles for code and JSON blocks
+%code-block-shared {
+  margin-bottom: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+  overflow: hidden; // Ensures the content doesn't overflow the rounded corners
+}
+
+// Code blocks
+.highlight {
+  @extend %code-block-shared;
+  background-color: #f8f8f8;
+
+  pre {
+    margin-bottom: 0;
+    padding: 1.25rem;
+    font-size: 0.9rem;
+    line-height: 1.5;
     overflow-x: auto;
   }
 
   .lineno {
-    display: inline-block; // Ensures the null space also isn't selectable
-    padding-right: .75rem;
-    padding-left: .25rem;
     color: #999;
-    // Make sure numbers aren't selectable
-    -webkit-user-select: none;
-       -moz-user-select: none;
-            user-select: none;
+    display: inline-block;
+    padding: 0 0.75rem 0 0.25rem;
+    border-right: 1px solid #e1e4e8;
+    user-select: none;
   }
 }
 
+// JSON-specific styling
+.language-json {
+  .highlight {
+    @extend %code-block-shared;
+    
+    pre {
+      padding: 1.5rem;
+    }
 
-// Gist via GitHub Pages
-// .gist .gist-file {
-//   font-family: Menlo, Monaco, "Courier New", monospace !important;
-// }
-// .gist .markdown-body {
-//   padding: 15px;
-// }
-// .gist pre {
-//   padding: 0;
-//   background-color: transparent;
-// }
-// .gist .gist-file .gist-data {
-//   font-size: .8rem !important;
-//   line-height: 1.4;
-// }
-// .gist code {
-//   padding: 0;
-//   color: inherit;
-//   background-color: transparent;
-//   border-radius: 0;
-// }
+    .p { color: #555; } /* Punctuation */
+    .s2 { color: #0b7; } /* String */
+    .mi, .mf { color: #07a; } /* Number */
+    .kc { color: #c0c; } /* Boolean */
+    .nl { color: #d63; } /* Property name */
+  }
+
+  // Collapsible JSON
+  details {
+    @extend %code-block-shared;
+    background-color: #f8f8f8;
+
+    summary {
+      cursor: pointer;
+      font-weight: bold;
+      padding: 0.75rem 1.25rem;
+      background-color: #eee;
+      border-bottom: 1px solid #e1e4e8;
+    }
+
+    &[open] summary {
+      margin-bottom: 0;
+    }
+
+    .highlight {
+      box-shadow: none;
+      border-radius: 0;
+    }
+  }
+}
+
+// Add visual guides for nested structures
+.language-json .highlight pre {
+  counter-reset: line;
+  
+  .line::before {
+    counter-increment: line;
+    content: counter(line);
+    display: inline-block;
+    width: 1.5rem;
+    margin-right: 1rem;
+    color: #999;
+    text-align: right;
+  }
+}
+
+// Indent guide
+.language-json .highlight pre {
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+  background-size: 1rem 1rem;
+  background-position: 3.5rem 0;
+}

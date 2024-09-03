@@ -3,23 +3,51 @@
 // Super small header above the content for site name and short description.
 
 .masthead {
-  padding-top:    1rem;
+  padding-top: 1rem;
   padding-bottom: 1rem;
   margin-bottom: 3rem;
+  border-bottom: 1px solid $gray-2;
+  background-color: $gray-1;
 }
 
 .masthead-title {
   margin-top: 0;
   margin-bottom: 0;
-  color: $gray-4;
+  color: $gray-8;
 
   a {
     color: inherit;
+    text-decoration: none;
+
+    &:hover,
+    &:focus {
+      text-decoration: underline;
+    }
   }
 
   small {
-    font-size: 75%;
+    display: block;
+    font-size: 65%;
     font-weight: 400;
-    opacity: .5;
+    opacity: 0.7;
+    color: $gray-6;
+    letter-spacing: 0;
+    margin-top: 0.2rem;
+  }
+}
+
+.nav {
+  margin-top: 0.5rem;
+
+  .nav-item {
+    color: $gray-6;
+    margin-right: 1rem;
+    text-decoration: none;
+
+    &:hover,
+    &:focus {
+      color: $gray-8;
+      text-decoration: underline;
+    }
   }
 }

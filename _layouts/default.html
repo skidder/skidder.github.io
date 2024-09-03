@@ -11,14 +11,9 @@
           <a href="{{ site.baseurl }}/" title="Home">{{ site.title }}</a>
           <small>{{ site.tagline }}</small>
         </h3>
-        <nav>
+        <nav class="nav">
           {% for item in site.data.navigation %}
-            <a href="{{ item.link }}">
-              {{ item.name }}
-            </a>
-            {% if forloop.last == false %}
-              |
-            {% endif %}
+            <a class="nav-item" href="{{ item.link }}">{{ item.name }}</a>
           {% endfor %}
         </nav>
       </header>
