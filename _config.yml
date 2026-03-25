@@ -1,45 +1,78 @@
-# Permalinks
-permalink:           pretty
+# Site settings
+title: Scott Kidder
+tagline: Yet Another Technology-Themed Blog
+description: Engineering, distributed systems, and technology by Scott Kidder.
+url: https://www.kidder.io
+baseurl: ""
 
-# Setup
-title:               Scott Kidder
-tagline:             Yet Another Technology-Themed Blog
-url:                 http://www.kidder.io
-paginate:            1
-baseurl:             ""
+# Theme
+remote_theme: hydecorp/hydejack@v9
 
-# Assets
-#
-# We specify the directory for Jekyll so we can use @imports.
-sass:
-  sass_dir: _sass
-  style: compressed
+# Hydejack settings
+hydejack:
+  accent_color: "#268bd2"
+  accent_image:
+    background: "#1a1a2e"
+    overlay: false
+  no_mark_external: true
+  no_push_state: false
+  no_drawer: false
+  no_navbar: false
+  no_search: false
+  no_inline_css: false
+  no_page_style: false
+  no_break_layout: true
+  no_toc: false
+  no_third_column: false
+  no_large_headings: false
+  no_structured_data: false
+  no_theme_color: false
+  no_breadcrumbs: false
+  use_lsi: false
+  cookies_banner: false
+  advertise: false
+  hide_dates: false
+  hide_last_modified: false
+  dark_mode:
+    always: false
+    dynamic: true
+    icon: true
 
-# About/contact
+# Author
 author:
-  name:              Scott Kidder
-  url:               https://twitter.com/hexdumpster
-  email:             kidder.scott@gmail.com
+  name: Scott Kidder
+  email: kidder.scott@gmail.com
+  social:
+    github: skidder
+    twitter: hexdumpster
+    linkedin: scott-kidder-2271041
 
-# Custom vars
-version:             2.0.0
-github:
-  repo:              https://github.com/skidder/skidder.github.io
+# Pagination
+paginate: 5
+paginate_path: /page-:num/
 
-# Gems
-gems:
-  - jekyll-coffeescript
-  - jekyll-gist
-  - jekyll-mentions
-  - jekyll-paginate
-  - jekyll-redirect-from
-whitelist:
-  - jekyll-coffeescript
-  - jekyll-gist
-  - jekyll-mentions
-  - jekyll-paginate
-  - jekyll-redirect-from
+# Permalinks
+permalink: pretty
 
+# Plugins
 plugins:
   - jekyll-paginate
   - jekyll-gist
+  - jekyll-redirect-from
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+# GitHub
+github:
+  repo: https://github.com/skidder/skidder.github.io
+
+# Sass
+sass:
+  style: compressed
+
+# Exclude from build
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - LICENSE.md
