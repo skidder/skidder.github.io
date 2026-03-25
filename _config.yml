@@ -38,6 +38,13 @@ hydejack:
     dynamic: true
     icon: true
 
+# Sidebar navigation
+menu:
+  - title: Blog
+    url:   /
+  - title: About
+    url:   /about/
+
 # Author
 author:
   name: Scott Kidder
