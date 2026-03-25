@@ -3,7 +3,7 @@ layout: post
 title: Getting Plex Hardware Transcoding Working on the Ugreen DXP4800 Pro
 ---
 
-I picked up a [Ugreen DXP4800 Pro](https://www.ugreen.com/products/ugreen-dxp4800-pro-nas) NAS earlier this year. It's a 4-bay unit with an Intel Core i5-1235U (Raptor Lake-P) - a chip more commonly found in laptops than NAS enclosures, which turns out to matter a lot when you want to run Plex Media Server.
+I picked up a [Ugreen DXP4800 Pro](https://nas.ugreen.com/products/ugreen-nasync-dxp4800-pro-136tb-4-bay-nas) NAS earlier this year. It's a 4-bay unit with an Intel Core i5-1235U (Raptor Lake-P) - a chip more commonly found in laptops than NAS enclosures, which turns out to matter a lot when you want to run Plex Media Server.
 
 Getting hardware transcoding working wasn't entirely straightforward. This post documents what actually happened, including a few non-obvious problems that wasted an afternoon.
 
