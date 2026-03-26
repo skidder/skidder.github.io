@@ -1,6 +1,6 @@
 # Site settings
 title: Scott Kidder
-tagline: Yet Another Technology-Themed Blog
+tagline: Engineering, distributed systems, and the occasional rabbit hole.
 description: Engineering, distributed systems, and technology by Scott Kidder.
 url: https://www.kidder.io
 baseurl: ""
@@ -10,10 +10,10 @@ remote_theme: hydecorp/hydejack@v9
 
 # Hydejack settings
 hydejack:
-  accent_color: "#268bd2"
+  accent_color: "#0ea5e9"
   accent_image:
-    background: "#1a1a2e"
-    overlay: false
+    background: "#0d1b2a"
+    overlay: true
   no_mark_external: true
   no_push_state: false
   no_drawer: false
@@ -72,6 +72,9 @@ plugins:
 # GitHub
 github:
   repo: https://github.com/skidder/skidder.github.io
+
+# Custom styles
+google_fonts: false
 
 # Sass
 sass:
