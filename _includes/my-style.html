@@ -1,0 +1,41 @@
+<style>
+/* Post list separators */
+.list-lead + .list-group-item,
+.list-group-item + .list-group-item {
+  border-top: 1px solid rgba(var(--gray-bg), 0.15);
+  padding-top: 1.5rem;
+  margin-top: 0.5rem;
+}
+
+/* Better post date visibility */
+.faded,
+.list-group-item .faded,
+time {
+  opacity: 0.8;
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+/* Continue reading link */
+.read-more,
+a.read-more {
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  border-bottom: 1.5px solid currentColor;
+  padding-bottom: 1px;
+}
+
+/* Sidebar text legibility over cover image */
+.sidebar-sticky .sidebar-about .sidebar-title,
+.sidebar-about h1 {
+  text-shadow: 0 1px 8px rgba(0,0,0,0.8);
+}
+
+.sidebar-sticky .sidebar-about .sidebar-tagline,
+.sidebar-about .sidebar-tagline {
+  text-shadow: 0 1px 5px rgba(0,0,0,0.7);
+}
+</style>

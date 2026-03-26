@@ -73,8 +73,9 @@ plugins:
 github:
   repo: https://github.com/skidder/skidder.github.io
 
-# Custom styles
-google_fonts: false
+# Hydejack custom CSS (loaded automatically by the theme)
+hydejack:
+  custom_css: true
 
 # Sass
 sass:
