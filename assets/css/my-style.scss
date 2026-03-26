@@ -1,0 +1,60 @@
+---
+---
+
+// Post list separators and spacing
+.related-posts li,
+.post-list li {
+  border-top: 1px solid rgba(255,255,255,0.07);
+  padding-top: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+// Better post date visibility
+.post-date,
+time.post-date,
+.post-list .post-date,
+.blog-list time {
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  opacity: 0.75;
+}
+
+// "Continue reading" as a styled link
+.read-more,
+a.read-more {
+  display: inline-block;
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--accent-color, #0ea5e9);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 1px;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+// Sidebar title/tagline legibility over cover image
+.sidebar-sticky .site-title,
+.sidebar .site-title,
+.sidebar-about h1,
+.sidebar-about .site-title {
+  text-shadow: 0 1px 6px rgba(0,0,0,0.7);
+}
+
+.sidebar-sticky .site-tagline,
+.sidebar .site-tagline,
+.sidebar-about .site-tagline {
+  text-shadow: 0 1px 4px rgba(0,0,0,0.6);
+}
+
+// Slightly brighter post titles
+h1.post-title a,
+h2.post-title a,
+.post-title a {
+  color: var(--accent-color, #0ea5e9);
+}
