@@ -12,7 +12,7 @@ Five nodes make up the mesh:
 - **Mesh Gateway** (`!9c5026a0`): [RAK4631](https://store.rakwireless.com/products/wisblock-meshtastic-starter-kit?variant=43884037079238) on a RAK19001 Base Board with RAK13800 Ethernet module and RAK19018 PoE module. Network-attached via Ethernet, powered over PoE, 2dBi rubber antenna. Acts as a router and the MQTT uplink to the rest of the network.
 - **Solar Router** (`!a033d26a`): [RAK4631](https://store.rakwireless.com/products/wisblock-meshtastic-starter-kit?variant=43884034916550) on a RAK19007 Base Board with RAK1921 OLED display, RAK12501 GNSS module, RAK1904 accelerometer, and 2dBi rubber antenna. Housed in a [WisMesh Unify Enclosure](https://store.rakwireless.com/products/wismesh-unify-enclosure?variant=44317874159814). Solar-powered, acts as a relay node.
 - **Sensor Node** (`!06c86404`): TLora V2.1.1.6, fixed position at home, GPS locked at 114m altitude.
-- **Mobile Alpha** (`!6c73c608`): T-Beam, carried mobile.
+- **Mobile Alpha** (`!6c73c608`): T-Beam in a 3D printed enclosure, carried mobile.
 - **Mobile Beta** (`!f9cf825a`): T-Echo with BME280 environmental sensor (temperature, humidity, pressure), carried mobile.
 
 The gateway publishes all received packets to a Mosquitto MQTT broker running on my NAS. Topic pattern: `msh/#`.
