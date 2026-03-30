@@ -157,7 +157,7 @@ sudo apt install intel-gpu-tools
 
 Here's what it looks like during an active transcode - Video engine at 17%, Render at zero, with `Plex Transcoder` and `media_worker` both registered against the GPU:
 
-![intel_gpu_top showing Plex Transcoder with Video engine at 17.42%](/public/images/plex-intel-gpu-top.png)
+![intel_gpu_top showing Plex Transcoder with Video engine at 17.42%](/public/images/plex-intel-gpu-top.webp)
 
 ### Direct Stream Isn't a Transcode
 
@@ -197,7 +197,7 @@ One limitation worth knowing: Plex's live TV transcoding pipeline doesn't use ha
 
 The hardware pipeline also powers Plex's background media optimizer, which pre-converts your library to formats that direct play on all your devices. With the iGPU handling it, optimization runs at around 5-6x real-time speed without noticeably affecting system load:
 
-![Plex media optimizer converting Jason Bourne at 5.9x speed](/public/images/plex-optimizer-5x.png)
+![Plex media optimizer converting Jason Bourne at 5.9x speed](/public/images/plex-optimizer-5x.webp)
 
 ## Final Compose File
 
