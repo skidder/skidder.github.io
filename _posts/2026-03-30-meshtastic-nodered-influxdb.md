@@ -15,7 +15,7 @@ Five nodes make up the mesh:
 - **Mobile Alpha** (`!6c73c608`): T-Beam, carried mobile.
 - **Mobile Beta** (`!f9cf825a`): T-Echo with BME280 environmental sensor (temperature, humidity, pressure), carried mobile.
 
-The gateway publishes all received packets to a Mosquitto MQTT broker running on my Ugreen DXP4800 Pro NAS at `192.168.1.15:1883`. Topic pattern: `msh/#`.
+The gateway publishes all received packets to a Mosquitto MQTT broker running on my NAS. Topic pattern: `msh/#`.
 
 ## The Stack
 
@@ -143,7 +143,7 @@ The dashboard covers network overview (active nodes, packet counts, SNR/RSSI), n
 
 The complete Node-RED flow is [available here](/public/images/meshtastic-flows.json). A few things to update for your own setup:
 
-- MQTT broker address (currently `192.168.1.15:1883`)
+- MQTT broker address
 - InfluxDB URL, org, bucket, and auth token
 - Node IDs and names in the seed function
 
