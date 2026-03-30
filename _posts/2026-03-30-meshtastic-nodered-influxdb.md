@@ -58,7 +58,7 @@ Decoded packet ──┬── Mesh measurement (all packets)
                          └── [others]         → debug nodes
 ```
 
-![Node-RED flow showing MQTT ingest subflow, deduplication, PortNum switch, and measurement subflows](/public/images/mesh-nodered-flow.png)
+![Node-RED Meshtastic flow: MQTT ingest subflow feeds into the Split by PortNum switch, with Mesh and Packet measurement subflows wired in parallel. Position, NodeInfo, Telemetry, and other port types each fan out to their own subflows or debug nodes. The seed inject node at bottom-left fires once on deploy.](/public/images/mesh-nodered-flow.png)
 
 The `Split by PortNum` switch checks `msg.payload.packet.decoded.portnum`. The `@meshtastic` package returns portnum as a number, not the string enum name, so the cases are numeric: 3 for Position, 4 for NodeInfo, 67 for Telemetry.
 
@@ -131,13 +131,21 @@ With telemetry flowing into InfluxDB, Grafana dashboards come together quickly.
 
 **Renaming series by node name.** InfluxDB Flux queries return series with names like `_value battery_level`. Grafana shows these with the `_value` prefix by default, which makes legends unreadable when you have multiple nodes. The fix: use the "Rename fields by regex" transformation with match `_value (.*)` and replacement `$1`. This strips the prefix and leaves just the node name from the `fromLongName` tag.
 
-The dashboard covers network overview (active nodes, packet counts, SNR/RSSI), node battery and power, signal quality over time, environmental sensors from Mobile Beta, and GPS position.
+The dashboard has four sections:
 
-![Grafana network overview and battery/power panels](/public/images/mesh-grafana-overview.png)
+**Network overview** - active node count, 24-hour packet totals, and rolling 1-hour averages for SNR, RSSI, channel utilization, and air utilization TX across all nodes. In practice SNR sits around 6-7 dB and RSSI around -50 to -87 dBm depending on which node is transmitting. Channel utilization stays well under 5% across the mesh.
 
-![Grafana environmental sensor panels showing temperature, humidity, and pressure from Mobile Beta](/public/images/mesh-grafana-env.png)
+**Battery and power** - voltage and battery percentage time series per node. The Solar Router voltage fluctuates between 3.79V and 4.06V as the panel charges and the battery discharges overnight. The Mesh Gateway (wall-powered via PoE) stays steady at 4.22-4.27V.
 
-![Grafana position and GPS panels](/public/images/mesh-grafana-position.png)
+**Environmental sensors** - temperature, humidity, and barometric pressure from Mobile Beta's BME280. Temperature shows a clear diurnal cycle: 22°C overnight, rising to a 29.5°C peak in the morning, settling back to 27°C by afternoon. Pressure holds steady around 999 mbar.
+
+**Position and GPS** - altitude, satellites in view, and a map panel showing node locations. The fixed nodes (Gateway and Sensor Node) hold steady at ~112-114m. Satellites in view gradually trends down on the Sensor Node over 24 hours - worth investigating.
+
+![Grafana network overview showing all 5 nodes active, packet counts, SNR averaging 6.3-6.6 dB, RSSI around -50 to -87 dBm. Battery panel shows Solar Router at 73% (3.93V), Sensor Node at 4.31V, Mesh Gateway at 4.25V. SNR and RSSI time series show Mobile Alpha and Mobile Beta with consistent signal quality over 24 hours.](/public/images/mesh-grafana-overview.png)
+
+![Environmental sensors from Mobile Beta (T-Echo with BME280): temperature ranging 21.7-29.5°C over 24 hours with a morning spike to 29.5°C, relative humidity steady at 29-36%H, barometric pressure around 999 mbar. Current readings: 26.8°C, 35.2%H, 999 mbar.](/public/images/mesh-grafana-env.png)
+
+![Position and GPS panels: altitude shows Mesh Gateway and Sensor Node steady at ~112-114m, Mobile Beta erratic during movement. Satellites in view: Gateway holding 17-21, Sensor Node gradually dropping to 3 by end of day. Node location map shows position near Benicia/Vallejo in the SF Bay Area.](/public/images/mesh-grafana-position.png)
 
 ## The Flow JSON
 
