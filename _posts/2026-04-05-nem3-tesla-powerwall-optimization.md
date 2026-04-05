@@ -11,7 +11,7 @@ Under NEM 3.0 (the Net Billing Tariff), export rates plummeted to around 4 to 8 
 
 I got Permission to Operate (PTO) in late December 2025 for a new system at my house in Benicia: 13.34 kW of REC 460W panels paired with two Tesla Powerwall 3s. The dual Powerwalls give me 23 kW of AC inverter capacity and 27 kWh of storage. The challenge became orchestrating this hardware alongside my 2021 Tesla Model 3 Long Range (~75 kWh of storage) to keep grid imports as close to zero as possible.
 
-*[Image suggestion: A wide shot of the dual Powerwall 3 installation on the side of the house, or the REC panels on the roof.]*
+![REC 460W solar panels installed on a residential roof](/public/images/nem3-rec-panels.webp)
 
 ## The Problem: EVs vs. House Loads
 
