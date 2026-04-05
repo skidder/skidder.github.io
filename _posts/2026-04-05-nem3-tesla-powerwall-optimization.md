@@ -5,7 +5,7 @@ date: 2026-04-05
 description: "Surviving California's Net Billing Tariff with dual Powerwall 3s, a Model 3, and the NetZero app."
 ---
 
-California's [NEM 3.0](https://www.cpuc.ca.gov/industries-and-topics/electrical-energy/net-energy-metering) changed the math for home solar. Under the old rules, the grid acted as a giant 1:1 battery. You overproduced during the day, pushed power to PG&E, and pulled it back at night for roughly the same price. 
+California's [NEM 3.0](https://www.tesla.com/support/energy/solar-panels/learn/net-billing#) changed the math for home solar. Under the old rules, the grid acted as a giant 1:1 battery. You overproduced during the day, pushed power to PG&E, and pulled it back at night for roughly the same price. 
 
 Under NEM 3.0 (the Net Billing Tariff), export rates plummeted to around 4 to 8 cents per kWh, while import rates during peak hours stay stubbornly above 50 cents. The only viable path today is absolute self-consumption. If you send power to the grid, you lose.
 
