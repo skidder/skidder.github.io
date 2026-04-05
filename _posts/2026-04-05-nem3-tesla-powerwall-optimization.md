@@ -5,11 +5,11 @@ date: 2026-04-05
 description: "Surviving California's Net Billing Tariff with dual Powerwall 3s, a Model 3, and the NetZero app."
 ---
 
-California's NEM 3.0 changed the math for home solar. Under the old rules, the grid acted as a giant 1:1 battery. You overproduced during the day, pushed power to PG&E, and pulled it back at night for roughly the same price. 
+California's [NEM 3.0](https://www.cpuc.ca.gov/industries-and-topics/electrical-energy/net-energy-metering) changed the math for home solar. Under the old rules, the grid acted as a giant 1:1 battery. You overproduced during the day, pushed power to PG&E, and pulled it back at night for roughly the same price. 
 
 Under NEM 3.0 (the Net Billing Tariff), export rates plummeted to around 4 to 8 cents per kWh, while import rates during peak hours stay stubbornly above 50 cents. The only viable path today is absolute self-consumption. If you send power to the grid, you lose.
 
-I got Permission to Operate (PTO) in late December 2025 for a new system at my house in Benicia: 13.34 kW of REC 460W panels paired with two Tesla Powerwall 3s. The dual Powerwalls give me 23 kW of AC inverter capacity and 27 kWh of storage. The challenge became orchestrating this hardware alongside my 2021 Tesla Model 3 Long Range (~75 kWh of storage) to keep grid imports as close to zero as possible.
+I got Permission to Operate (PTO) in late December 2025 for a new system at my house in Benicia: 13.34 kW of [REC 460W](https://www.recgroup.com/en/our-products/rec-460aa-pure-rx-1) panels paired with two [Tesla Powerwall 3](https://www.tesla.com/powerwall)s. The dual Powerwalls give me 23 kW of AC inverter capacity and 27 kWh of storage. The challenge became orchestrating this hardware alongside my 2021 Tesla Model 3 Long Range (~75 kWh of storage) to keep grid imports as close to zero as possible.
 
 ![REC 460W solar panels installed on a residential roof](/public/images/nem3-rec-panels.webp)
 
@@ -21,7 +21,7 @@ If I plug the car in and it immediately starts pulling 11 kW, two bad things hap
 
 ## The Fix: NetZero App and SOC Thresholds
 
-To fix this, I handed control over to the NetZero app. It acts as an orchestrator between the Powerwalls and the vehicle. 
+To fix this, I handed control over to the [NetZero](https://www.netzeropower.com/) app. It acts as an orchestrator between the Powerwalls and the vehicle. 
 
 ![NetZero app showing Powerwall priority set to 90% before EV charging begins](/public/images/nem3-netzero-settings.webp)
 
@@ -39,7 +39,7 @@ I set my Powerwall reserve to 5%. Hoarding energy in a battery defeats the purpo
 
 ## Long-Term Monitoring: InfluxDB and Grafana
 
-To make sure this orchestration actually works, I pipe the home energy telemetry into InfluxDB and visualize it with Grafana. 
+To make sure this orchestration actually works, I pipe the home energy telemetry into [InfluxDB](https://www.influxdata.com/) and visualize it with [Grafana](https://grafana.com/). 
 
 ![Grafana power flow dashboard showing solar charging the battery, then the EV pulling the excess once the Powerwalls hit 90%](/public/images/nem3-grafana-flow.webp)
 
@@ -49,7 +49,7 @@ This dashboard tracks system performance, self-consumption ratios, and battery c
 
 ## The Results
 
-With this logic in place, my PG&E bill is essentially reduced to the fixed connection fee and Non-Bypassable Charges (NBCs). However, because I am in Marin Clean Energy (MCE) territory, any actual grid imports during the dark winter months are still hit with MCE generation fees on top of PG&E delivery rates. Avoiding those imports entirely is the only way to win.
+With this logic in place, my PG&E bill is essentially reduced to the fixed connection fee and Non-Bypassable Charges (NBCs). However, because I am in [Marin Clean Energy (MCE)](https://www.mcecleanenergy.org/) territory, any actual grid imports during the dark winter months are still hit with MCE generation fees on top of PG&E delivery rates. Avoiding those imports entirely is the only way to win.
 
 ![NetZero Today dashboard showing solar production entirely consumed by the home, EV, and battery with zero grid usage](/public/images/nem3-netzero-dashboard.webp)
 
