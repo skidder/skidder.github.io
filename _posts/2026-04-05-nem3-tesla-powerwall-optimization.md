@@ -21,7 +21,7 @@ If I plug the car in and it immediately starts pulling 11 kW, two bad things hap
 
 ## The Fix: NetZero App and SOC Thresholds
 
-To fix this, I handed control over to the [NetZero](https://www.netzeropower.com/) app. It acts as an orchestrator between the Powerwalls and the vehicle. 
+To fix this, I handed control over to the [NetZero](https://www.netzero.energy/) app. It acts as an orchestrator between the Powerwalls and the vehicle. 
 
 ![NetZero app showing Powerwall priority set to 90% before EV charging begins](/public/images/nem3-netzero-settings.webp)
 
