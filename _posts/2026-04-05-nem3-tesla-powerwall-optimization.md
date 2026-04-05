@@ -53,4 +53,4 @@ With this logic in place, my PG&E bill is essentially reduced to the fixed conne
 
 ![NetZero Today dashboard showing solar production entirely consumed by the home, EV, and battery with zero grid usage](/public/images/nem3-netzero-dashboard.webp)
 
-The system banks energy on the weekends and early in the week, loading up the car for my mid-week commutes. Any hardware investment in NEM 3.0 requires batteries, but extracting the actual ROI requires software that forces your car to eat the leftovers.
+The system banks energy on the weekends and early in the week, loading up the car for my mid-week commutes. Any hardware investment in NEM 3.0 requires batteries, but extracting the actual ROI requires automation to keep grid exports near zero.
