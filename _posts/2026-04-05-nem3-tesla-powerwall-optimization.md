@@ -9,7 +9,7 @@ California's [NEM 3.0](https://www.cpuc.ca.gov/industries-and-topics/electrical-
 
 Under NEM 3.0 (the Net Billing Tariff), export rates plummeted to around 4 to 8 cents per kWh, while import rates during peak hours stay stubbornly above 50 cents. The only viable path today is absolute self-consumption. If you send power to the grid, you lose.
 
-I got Permission to Operate (PTO) in late December 2025 for a new system at my house in Benicia: 13.34 kW of [REC 460W](https://www.recgroup.com/en/our-products/rec-460aa-pure-rx-1) panels paired with two [Tesla Powerwall 3](https://www.tesla.com/powerwall)s. The dual Powerwalls give me 23 kW of AC inverter capacity and 27 kWh of storage. The challenge became orchestrating this hardware alongside my 2021 Tesla Model 3 Long Range (~75 kWh of storage) to keep grid imports as close to zero as possible.
+I got Permission to Operate (PTO) in late December 2025 for a new system at my house in Benicia: 13.34 kW of [REC 460W](https://www.recgroup.com/en/rec-alpha-pure-rx) panels paired with two [Tesla Powerwall 3](https://www.tesla.com/powerwall)s. The dual Powerwalls give me 23 kW of AC inverter capacity and 27 kWh of storage. The challenge became orchestrating this hardware alongside my 2021 Tesla Model 3 Long Range (~75 kWh of storage) to keep grid imports as close to zero as possible.
 
 ![REC 460W solar panels installed on a residential roof](/public/images/nem3-rec-panels.webp)
 
