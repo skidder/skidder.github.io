@@ -45,7 +45,7 @@ To make sure this orchestration actually works, I pipe the home energy telemetry
 
 This dashboard tracks system performance, self-consumption ratios, and battery cycling over time. It provides a much clearer picture of historical trends than the native Tesla app. More importantly, it makes it easy to spot when a configuration needs tweaking, especially as the seasons change and solar production dips.
 
-![Grafana energy statistics dashboard showing a 137 kWh solar harvest over 48 hours with minimal grid imports](/public/images/nem3-grafana-stats.webp)
+
 
 ## The Results
 
