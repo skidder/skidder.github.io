@@ -1,0 +1,11 @@
+{
+  "version": "1.0",
+  "type": "link",
+  "title": "oEmbed PoC: lone-quote dimension (parsed)",
+  "provider_name": "kidder.io",
+  "provider_url": "https://kidder.io/",
+  "width": "\"",
+  "height": "\"",
+  "thumbnail_width": "\"",
+  "thumbnail_height": "\""
+}

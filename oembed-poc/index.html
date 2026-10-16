@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>oEmbed unfurler check (lone quote)</title>
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<meta name="referrer" content="no-referrer">
+<!--
+  Unfurler regression check: a page that advertises an oEmbed document whose
+  dimension fields are the one-character string `"`.
+
+  discord_unfurler/src/extractors/oembed.rs (pre-fix) does, for each of
+  width / height / thumbnail_width / thumbnail_height:
+
+      fn strip_quotes(data: &str) -> &str {
+          if data.starts_with('"') && data.ends_with('"') {
+              &data[1..data.len() - 1]     // [1..0] for a lone `"` -> panic
+          } else { data }
+      }
+
+  Deserializing this page's oEmbed JSON therefore panics inside the
+  thingvellir cache-load task, which re-raises on the shard task whose
+  AbortOnPanic guard calls std::process::abort().
+
+  Expected after the fix: the JSON parses, all four dimensions become 0, and
+  the embed below shows the oEmbed title fetched from oembed.json.
+-->
+<link rel="alternate" type="application/json+oembed" href="https://kidder.io/oembed-poc/oembed.json">
+</head>
+<body>
+<h1>oEmbed unfurler check &mdash; lone quote dimension</h1>
+
+<p>This page exists only to exercise Discord's unfurler oEmbed extractor. It
+advertises:</p>
+
+<pre>&lt;link rel="alternate" type="application/json+oembed"
+      href="https://kidder.io/oembed-poc/oembed.json"&gt;</pre>
+
+<p>and that document returns <code>"width": "\""</code> (and the same for
+<code>height</code>, <code>thumbnail_width</code>, <code>thumbnail_height</code>).</p>
+
+<p>Not linked from anywhere on the site.</p>
+</body>
+</html>

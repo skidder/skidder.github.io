@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Deliberately no <title> and no og:/twitter: tags, so the embed title can
+     only come from the oEmbed document. If the unfurl below shows
+     "oEmbed control: quoted numeric dimensions parsed", the oEmbed JSON was
+     fetched and parsed — i.e. the extractor path really ran. -->
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<meta name="referrer" content="no-referrer">
+<link rel="alternate" type="application/json+oembed" href="https://kidder.io/oembed-poc/control/oembed.json">
+</head>
+<body>
+<h1>oEmbed unfurler control</h1>
+
+<p>Same oEmbed shape as <a href="/oembed-poc/">/oembed-poc/</a>, but the
+dimensions are quoted numbers (<code>"1200"</code>, <code>"630"</code>,
+<code>"300"</code>, <code>"200"</code>) instead of a lone quote.</p>
+
+<p>This one is expected to unfurl on both the pre-fix and post-fix build (only
+the lone quote panics). Its job is to prove the oEmbed document is actually
+requested and parsed, so a quiet result on the
+<a href="/oembed-poc/">lone-quote page</a> cannot be mistaken for "the extractor
+never ran".</p>
+</body>
+</html>
